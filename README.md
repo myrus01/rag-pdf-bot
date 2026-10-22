@@ -31,7 +31,10 @@ GEMINI_API_KEY=your_key_here
 3. Put your PDF in the project folder as `doc.pdf`
 4. Run:
 python search.py
-
+5. Or run the web version with PDF upload and chat history:
+```
+   streamlit run app.py
+```
 ## What I learned
 
 - **Chunking matters.** With 500-character chunks, a sentence about the team's location was buried in a chunk full of links and ranked poorly. Smaller 300-character chunks raised its similarity score and moved it to the top.
@@ -39,9 +42,8 @@ python search.py
 - **Retrieving several chunks adds robustness.** Even when the best chunk wasn't ranked first, it was in the top 3, so the model could still answer correctly.
 - **Grounding prevents hallucination.** Telling the model to answer only from the context made it say "I don't know" for questions the document doesn't cover.
 - **Real-world API limits.** I handled server overload (503) and free-tier quota errors (429) with `try/except` so the app keeps running.
-
+- **LLMs have no memory.** Each API call is independent, so the app keeps chat history in `st.session_state` and sends the last messages with every prompt.
 ## Possible improvements
 
 - Split chunks by sentences instead of characters
 - Store embeddings in a vector database (Chroma / FAISS) instead of recomputing them on every run
-- Web interface with Streamlit and PDF upload
