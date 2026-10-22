@@ -1,3 +1,4 @@
 .env
 venv/
 doc.pdf
+__pycache__/
